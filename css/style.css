@@ -1,0 +1,979 @@
+/* ==========================================================================
+   ឯកសាររចនាមេ (Main Stylesheet - css/style.css)
+   កំណត់ពណ៌ ពុម្ពអក្សរ ចលនា និងផ្ទាំង Light/Dark Mode សម្រាប់កម្មវិធីទាំងមូល
+   ========================================================================== */
+
+/* អថេរពណ៌សម្រាប់ផ្ទាំងភ្លឺ (Light Theme Variables) */
+:root {
+  --bg-main: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-sidebar: #0f172a;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary: #7c3aed;
+  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  --gradient-soft: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 20px 35px -10px rgba(37, 99, 235, 0.18);
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* អថេរពណ៌សម្រាប់ផ្ទាំងងងឹត (Dark Theme Variables) */
+[data-theme="dark"] {
+  --bg-main: #0b1120;
+  --bg-surface: #1e293b;
+  --bg-subtle: #0f172a;
+  --bg-sidebar: #070b14;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --secondary: #8b5cf6;
+  --gradient-soft: linear-gradient(135deg, rgba(59, 130, 246, 0.14) 0%, rgba(139, 92, 246, 0.14) 100%);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* ការកំណត់ទូទៅ (Global Reset & Typography) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Kantumruy Pro', 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.65;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+.math-font {
+  font-family: 'Plus Jakarta Sans', 'Cambria Math', serif;
+  letter-spacing: 0.2px;
+}
+
+/* គ្រោងឆ្អឹងមេ (App Layout Structure) */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ==================== របារម៉ឺនុយចំហៀង (SIDEBAR) ==================== */
+.sidebar {
+  width: 270px;
+  background-color: var(--bg-sidebar);
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-header {
+  padding: 1.4rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.math-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  flex-shrink: 0;
+}
+
+.math-badge.large {
+  width: 58px;
+  height: 58px;
+  font-size: 1.5rem;
+}
+
+.brand-text h1 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.pro-tag {
+  font-size: 0.65rem;
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  padding: 2px 6px;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+.brand-text p {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+/* ប៊ូតុងម៉ឺនុយនីមួយៗ (Sidebar Navigation Items) */
+.sidebar-nav {
+  padding: 1.1rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.78rem 1rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: #cbd5e1;
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition);
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+/* រចនាសម្រាប់ម៉ឺនុយដែលកំពុងសកម្ម (Active Menu Highlighting) */
+.nav-item.active {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+}
+
+.nav-icon {
+  width: 26px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.nav-label {
+  flex: 1;
+}
+
+.count-badge {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mini-formula-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.mini-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: block;
+}
+
+.mini-formula-card p {
+  font-weight: 700;
+  color: #38bdf8;
+  margin-top: 2px;
+}
+
+/* ==================== ផ្នែកមាតិកាខាងស្តាំ (MAIN WRAPPER) ==================== */
+.main-wrapper {
+  flex: 1;
+  margin-left: 270px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* របារខាងលើ (Topbar Header) */
+.topbar {
+  height: 70px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  box-shadow: var(--shadow-sm);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.control-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.control-pill:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* ប៊ូតុងហាំប៊ឺហ្គឺ (Mobile Hamburger Menu Button) */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 19px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger-btn span {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  background: var(--text-primary);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.mobile-only {
+  display: none;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* ==================== ផ្នែកបង្ហាញទំព័រ (CONTENT & PAGE SECTIONS) ==================== */
+.content-area {
+  padding: 1.75rem;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.page-section {
+  display: none;
+  animation: fadeSlideUp 0.35s ease forwards;
+}
+
+.page-section.active {
+  display: block;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* កាតទូទៅ (Reusable Card Component) */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+/* ==================== ទំព័រដើម (HOME HERO & FEATURES) ==================== */
+.hero-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-pill {
+  display: inline-block;
+  background: var(--gradient-soft);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.84rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 0.9rem;
+}
+
+.hero-content h1 {
+  font-size: 1.85rem;
+  line-height: 1.35;
+  margin-bottom: 0.9rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.hero-image-box {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.floating-math-badge {
+  position: absolute;
+  background: rgba(15, 23, 42, 0.86);
+  color: #38bdf8;
+  backdrop-filter: blur(8px);
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.badge-1 { top: 14px; left: 14px; }
+.badge-2 { bottom: 14px; right: 14px; color: #c084fc; border-color: rgba(192, 132, 252, 0.35); }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.feature-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.gradient-blue { background: linear-gradient(135deg, #2563eb, #38bdf8); }
+.gradient-purple { background: linear-gradient(135deg, #7c3aed, #c084fc); }
+.gradient-emerald { background: linear-gradient(135deg, #059669, #34d399); }
+.gradient-amber { background: linear-gradient(135deg, #d97706, #fbbf24); }
+
+.feature-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.45rem;
+}
+
+.feature-card p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+/* ==================== ទំព័រដោះស្រាយសមីការ (SOLVER LAYOUT) ==================== */
+.solver-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.35rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.equation-preview {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.02rem;
+  margin-top: 2px;
+}
+
+.coeff-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(2, 1fr); }
+
+.input-group label {
+  display: block;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.72rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+}
+
+/* របារឧទាហរណ៍ (Examples Chips) */
+.examples-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.35rem;
+  padding: 0.85rem;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+}
+
+.examples-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-right: 0.2rem;
+}
+
+.chip-btn {
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.chip-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+/* ប៊ូតុងសកម្មភាព (Buttons) */
+.action-buttons {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.35rem;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+  flex: 1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.38);
+}
+
+.btn-secondary {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border-color);
+}
+
+.btn-outline:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+/* ប្រអប់លទ្ធផល និងជំហានដោះស្រាយ (Result & Steps Styling) */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.result-banner {
+  background: var(--gradient-soft);
+  border-left: 4px solid var(--primary);
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.2rem;
+}
+
+.result-condition-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--bg-surface);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 0.45rem;
+  border: 1px solid var(--border-color);
+}
+
+.final-roots-box {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.5rem;
+}
+
+.root-item {
+  background: var(--bg-surface);
+  padding: 0.65rem 0.95rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--text-primary);
+}
+
+.steps-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.step-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  font-size: 0.92rem;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ==================== ទំព័ររូបមន្ត (FORMULAS PAGE) ==================== */
+.formulas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.formula-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.badge-pill {
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.badge-pill.blue { background: #2563eb; }
+.badge-pill.purple { background: #7c3aed; }
+
+.formula-box {
+  background: var(--gradient-soft);
+  border: 1px dashed var(--primary);
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-md);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 1.1rem;
+}
+
+.formula-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.formula-list li {
+  padding: 0.75rem;
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.formula-list li span {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ==================== ទំព័រប្រវត្តិគណនា (HISTORY PAGE) ==================== */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.35rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.history-item {
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.history-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.history-eq {
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--primary);
+}
+
+.history-ans {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ==================== ទំព័រក្រុមការងារ (TEAM WORK PAGE) ==================== */
+.team-intro {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.35rem;
+}
+
+.team-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  position: relative;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--primary);
+}
+
+.team-card.leader-card {
+  border: 2px solid var(--primary);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.05) 0%, var(--bg-surface) 100%);
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.role-badge.leader {
+  background: var(--gradient-primary);
+  color: #ffffff;
+}
+
+.role-badge.member {
+  background: var(--bg-subtle);
+  color: var(--primary);
+  border: 1px solid var(--border-color);
+}
+
+.team-avatar {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+  margin: 0 auto 0.9rem;
+  display: block;
+}
+
+.team-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.team-role-title {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.65rem;
+}
+
+.team-resp {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+}
+
+/* ==================== ទំព័រអំពីកម្មវិធី (ABOUT PAGE) ==================== */
+.about-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.about-body p {
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.tech-stack-box h4 {
+  margin-bottom: 0.75rem;
+}
+
+.tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tech-pill {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: var(--gradient-soft);
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.84rem;
+  border: 1px solid var(--border-color);
+}
+
+.sidebar-overlay {
+  display: none;
+}

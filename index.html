@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="km" data-theme="light">
+<head>
+  <!-- ការកំណត់មូលដ្ឋានរបស់គេហទំព័រ (Basic Document Metadata) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equation Solver Pro | កម្មវិធីដោះស្រាយសមីការ</title>
+  
+  <!-- ភ្ជាប់ពុម្ពអក្សរភាសាខ្មែរ និងអង់គ្លេស (Google Fonts: Kantumruy Pro & Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- ភ្ជាប់ឯកសាររចនា CSS (Stylesheets) -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <!-- ផ្ទាំងស្រទាប់ងងឹតសម្រាប់បិទម៉ឺនុយលើទូរស័ព្ទដៃ (Mobile Sidebar Overlay) -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- គ្រោងឆ្អឹងមេរបស់កម្មវិធី (Main Application Wrapper) -->
+  <div class="app-container">
+    
+    <!-- របារម៉ឺនុយចំហៀង (Sidebar Navigation Menu) -->
+    <aside id="sidebar" class="sidebar" aria-label="Primary Navigation">
+      <!-- ផ្នែកស្លាកសញ្ញាកម្មវិធី (Brand Logo Header) -->
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="math-badge">∑𝑥</span>
+          <div class="brand-text">
+            <h1>Equation Solver <span class="pro-tag">PRO</span></h1>
+            <p data-i18n="brandSub">គណិតវិទ្យាវិទ្យាល័យ</p>
+          </div>
+        </div>
+        <!-- ប៊ូតុងបិទម៉ឺនុយលើអេក្រង់តូច (Mobile Close Button) -->
+        <button id="closeSidebarBtn" class="icon-btn mobile-only" aria-label="Close Menu">✕</button>
+      </div>
+
+      <!-- បញ្ជីតំណភ្ជាប់ម៉ឺនុយទាំង ៧ (Navigation Menu Links) -->
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-page="home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label" data-i18n="navHome">ទំព័រដើម</span>
+        </button>
+        <button class="nav-item" data-page="quadratic">
+          <span class="nav-icon">𝑥²</span>
+          <span class="nav-label" data-i18n="navQuadratic">សមីការដឺក្រេទី ២</span>
+        </button>
+        <button class="nav-item" data-page="cubic">
+          <span class="nav-icon">𝑥³</span>
+          <span class="nav-label" data-i18n="navCubic">សមីការដឺក្រេទី ៣</span>
+        </button>
+        <button class="nav-item" data-page="formulas">
+          <span class="nav-icon">📐</span>
+          <span class="nav-label" data-i18n="navFormulas">រូបមន្តគណិតវិទ្យា</span>
+        </button>
+        <button class="nav-item" data-page="history">
+          <span class="nav-icon">🕒</span>
+          <span class="nav-label" data-i18n="navHistory">ប្រវត្តិគណនា</span>
+          <span id="historyBadge" class="count-badge">0</span>
+        </button>
+        <button class="nav-item" data-page="team">
+          <span class="nav-icon">👥</span>
+          <span class="nav-label" data-i18n="navTeam">ក្រុមការងារ</span>
+        </button>
+        <button class="nav-item" data-page="about">
+          <span class="nav-icon">ℹ️</span>
+          <span class="nav-label" data-i18n="navAbout">អំពីកម្មវិធី</span>
+        </button>
+      </nav>
+
+      <!-- ផ្នែកខាងក្រោមនៃរបារម៉ឺនុយ (Sidebar Footer Info) -->
+      <div class="sidebar-footer">
+        <div class="mini-formula-card">
+          <span class="mini-label" data-i18n="quickTipTitle">គន្លឹះរហ័ស</span>
+          <p class="math-font">Δ = b² - 4ac</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ផ្នែកមាតិកាមេខាងស្តាំ (Main Content Area) -->
+    <div class="main-wrapper">
+      
+      <!-- របារឧបករណ៍ខាងលើ (Top Header Bar) -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <!-- ប៊ូតុងហាំប៊ឺហ្គឺសម្រាប់បើកម៉ឺនុយលើទូរស័ព្ទ (Mobile Hamburger Button) -->
+          <button id="menuToggleBtn" class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <h2 id="currentPageTitle" class="page-heading" data-i18n="navHome">ទំព័រដើម</h2>
+        </div>
+
+        <!-- ប៊ូតុងប្តូរភាសា និងប្តូរផ្ទៃភ្លឺ/ងងឹត (Language & Theme Controls) -->
+        <div class="topbar-actions">
+          <button id="langToggleBtn" class="control-pill" title="Switch Language / ប្តូរភាសា">
+            <span id="langFlag">🇰🇭</span>
+            <span id="langText">ខ្មែរ / EN</span>
+          </button>
+          <button id="themeToggleBtn" class="control-pill theme-btn" title="Toggle Light/Dark Mode">
+            <span id="themeIcon">🌙</span>
+            <span id="themeLabel" data-i18n="darkMode">ងងឹត</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- កន្លែងបង្ហាញទំព័រនីមួយៗ (Dynamic Page Views Container) -->
+      <main class="content-area">
+
+        <!-- ==================== ១. ទំព័រដើម (HOME PAGE) ==================== -->
+        <section id="page-home" class="page-section active">
+          <div class="hero-card">
+            <div class="hero-content">
+              <span class="hero-pill" data-i18n="heroBadge">✨ ឧបករណ៍សិក្សាគណិតវិទ្យាទំនើប</span>
+              <h1 data-i18n="heroTitle">ដោះស្រាយសមីការដឺក្រេទី ២ និងទី ៣ យ៉ាងងាយស្រួល និងច្បាស់លាស់</h1>
+              <p data-i18n="heroDesc">
+                គណនាឫសពិត ឫសកុំផ្លិច ឫសឌុប និងករណីពិសេសទាំងអស់ ព្រមទាំងបង្ហាញដំណោះស្រាយជាជំហានៗ ជាភាសាខ្មែរ និងអង់គ្លេស។
+              </p>
+              <div class="hero-buttons">
+                <button class="btn btn-primary" data-goto="quadratic">
+                  <span>𝑥²</span> <span data-i18n="startQuadBtn">ដោះស្រាយសមីការដឺក្រេទី ២</span>
+                </button>
+                <button class="btn btn-secondary" data-goto="cubic">
+                  <span>𝑥³</span> <span data-i18n="startCubicBtn">ដោះស្រាយសមីការដឺក្រេទី ៣</span>
+                </button>
+              </div>
+            </div>
+            <div class="hero-image-box">
+              <img src="assets/images/math-hero.jpg" alt="Mathematical Graphs Visualization" class="hero-img" />
+              <div class="floating-math-badge badge-1">ax² + bx + c = 0</div>
+              <div class="floating-math-badge badge-2">ax³ + bx² + cx + d = 0</div>
+            </div>
+          </div>
+
+          <!-- កាតបង្ហាញមុខងារសំខាន់ៗ (Feature Highlights Grid) -->
+          <div class="features-grid">
+            <div class="feature-card" data-goto="quadratic">
+              <div class="feature-icon gradient-blue">𝑥²</div>
+              <h3 data-i18n="feat1Title">សមីការដឺក្រេទី ២</h3>
+              <p data-i18n="feat1Desc">គណនា Δ, ឫសពិត ២ ផ្សេងគ្នា, ឫសឌុប, ឫសកុំផ្លិច និងករណី a = 0 យ៉ាងលម្អិត។</p>
+            </div>
+            <div class="feature-card" data-goto="cubic">
+              <div class="feature-icon gradient-purple">𝑥³</div>
+              <h3 data-i18n="feat2Title">សមីការដឺក្រេទី ៣</h3>
+              <p data-i18n="feat2Desc">ប្រើវិធីសាស្ត្រ Cardano & Trigonometric ដើម្បីរកឫសទាំង ៣ គ្រប់លក្ខខណ្ឌទាំងអស់។</p>
+            </div>
+            <div class="feature-card" data-goto="formulas">
+              <div class="feature-icon gradient-emerald">📐</div>
+              <h3 data-i18n="feat3Title">បណ្ណាល័យរូបមន្ត</h3>
+              <p data-i18n="feat3Desc">សង្ខេបរូបមន្តសំខាន់ៗ ទ្រឹស្តីបទ Viète និងលក្ខខណ្ឌនៃឌីស្គ្រីមីណង់។</p>
+            </div>
+            <div class="feature-card" data-goto="team">
+              <div class="feature-icon gradient-amber">👥</div>
+              <h3 data-i18n="feat4Title">គម្រោងក្រុមសិស្ស</h3>
+              <p data-i18n="feat4Desc">រៀបចំឡើងសម្រាប់ការធ្វើបទបង្ហាញថ្នាក់វិទ្យាល័យ ដោយប្រធានក្រុម ១ នាក់ និងសមាជិក ៤ នាក់។</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== ២. សមីការដឺក្រេទី ២ (QUADRATIC SOLVER) ==================== -->
+        <section id="page-quadratic" class="page-section">
+          <div class="solver-layout">
+            <!-- ប្រអប់បញ្ចូលមេគុណ (Quadratic Input Card) -->
+            <div class="card solver-input-card">
+              <div class="card-header">
+                <span class="card-icon">𝑥²</span>
+                <div>
+                  <h3 data-i18n="quadCardTitle">សមីការដឺក្រេទី ២ (Quadratic Equation)</h3>
+                  <p class="equation-preview math-font" id="quadLivePreview">1x² + 0x + 0 = 0</p>
+                </div>
+              </div>
+
+              <!-- ប្រអប់បញ្ចូលតម្លៃ a, b, c -->
+              <div class="coeff-grid grid-3">
+                <div class="input-group">
+                  <label for="quadA"><span data-i18n="coeffLabel">មេគុណ</span> <strong>a</strong> (𝑥²)</label>
+                  <input type="number" step="any" id="quadA" value="1" placeholder="ឧ. 1" />
+                </div>
+                <div class="input-group">
+                  <label for="quadB"><span data-i18n="coeffLabel">មេគុណ</span> <strong>b</strong> (𝑥)</label>
+                  <input type="number" step="any" id="quadB" value="-5" placeholder="ឧ. -5" />
+                </div>
+                <div class="input-group">
+                  <label for="quadC"><span data-i18n="constLabel">ចំនួនថេរ</span> <strong>c</strong></label>
+                  <input type="number" step="any" id="quadC" value="6" placeholder="ឧ. 6" />
+                </div>
+              </div>
+
+              <!-- ប៊ូតុងឧទាហរណ៍រហ័ស (Quick Preset Examples) -->
+              <div class="examples-bar">
+                <span class="examples-label" data-i18n="examplesLabel">ឧទាហរណ៍៖</span>
+                <button type="button" class="chip-btn quad-example" data-a="1" data-b="-5" data-c="6" data-i18n="exQuadReal">ឫសពិត ២</button>
+                <button type="button" class="chip-btn quad-example" data-a="1" data-b="-4" data-c="4" data-i18n="exQuadDouble">ឫសឌុប</button>
+                <button type="button" class="chip-btn quad-example" data-a="1" data-b="2" data-c="5" data-i18n="exQuadComplex">ឫសកុំផ្លិច</button>
+                <button type="button" class="chip-btn quad-example" data-a="0" data-b="2" data-c="-8" data-i18n="exQuadLinear">ដឺក្រេទី ១ (a=0)</button>
+                <button type="button" class="chip-btn quad-example" data-a="0" data-b="0" data-c="5" data-i18n="exNoSol">គ្មានចម្លើយ</button>
+                <button type="button" class="chip-btn quad-example" data-a="0" data-b="0" data-c="0" data-i18n="exInfSol">ចម្លើយរាប់មិនអស់</button>
+              </div>
+
+              <!-- ប៊ូតុងគណនា និងសម្អាត (Action Buttons) -->
+              <div class="action-buttons">
+                <button id="solveQuadBtn" class="btn btn-primary">
+                  <span>⚡</span> <span data-i18n="btnCalculate">គណនា</span>
+                </button>
+                <button id="clearQuadBtn" class="btn btn-outline">
+                  <span>🧹</span> <span data-i18n="btnClear">សម្អាត</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ប្រអប់បង្ហាញលទ្ធផល និងជំហានដោះស្រាយ (Quadratic Result Card) -->
+            <div class="card solver-result-card" id="quadResultContainer">
+              <div class="empty-state">
+                <div class="empty-icon">🧮</div>
+                <p data-i18n="emptyResultHint">សូមបញ្ចូលមេគុណ រួចចុចប៊ូតុង "គណនា" ដើម្បីមើលដំណោះស្រាយលម្អិត។</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== ៣. សមីការដឺក្រេទី ៣ (CUBIC SOLVER) ==================== -->
+        <section id="page-cubic" class="page-section">
+          <div class="solver-layout">
+            <!-- ប្រអប់បញ្ចូលមេគុណ (Cubic Input Card) -->
+            <div class="card solver-input-card">
+              <div class="card-header">
+                <span class="card-icon">𝑥³</span>
+                <div>
+                  <h3 data-i18n="cubicCardTitle">សមីការដឺក្រេទី ៣ (Cubic Equation)</h3>
+                  <p class="equation-preview math-font" id="cubicLivePreview">1x³ - 6x² + 11x - 6 = 0</p>
+                </div>
+              </div>
+
+              <!-- ប្រអប់បញ្ចូលតម្លៃ a, b, c, d -->
+              <div class="coeff-grid grid-4">
+                <div class="input-group">
+                  <label for="cubicA"><span data-i18n="coeffLabel">មេគុណ</span> <strong>a</strong> (𝑥³)</label>
+                  <input type="number" step="any" id="cubicA" value="1" placeholder="ឧ. 1" />
+                </div>
+                <div class="input-group">
+                  <label for="cubicB"><span data-i18n="coeffLabel">មេគុណ</span> <strong>b</strong> (𝑥²)</label>
+                  <input type="number" step="any" id="cubicB" value="-6" placeholder="ឧ. -6" />
+                </div>
+                <div class="input-group">
+                  <label for="cubicC"><span data-i18n="coeffLabel">មេគុណ</span> <strong>c</strong> (𝑥)</label>
+                  <input type="number" step="any" id="cubicC" value="11" placeholder="ឧ. 11" />
+                </div>
+                <div class="input-group">
+                  <label for="cubicD"><span data-i18n="constLabel">ចំនួនថេរ</span> <strong>d</strong></label>
+                  <input type="number" step="any" id="cubicD" value="-6" placeholder="ឧ. -6" />
+                </div>
+              </div>
+
+              <!-- ប៊ូតុងឧទាហរណ៍រហ័សសម្រាប់សមីការដឺក្រេទី ៣ -->
+              <div class="examples-bar">
+                <span class="examples-label" data-i18n="examplesLabel">ឧទាហរណ៍៖</span>
+                <button type="button" class="chip-btn cubic-example" data-a="1" data-b="-6" data-c="11" data-d="-6" data-i18n="exCubic3Real">ឫសពិត ៣</button>
+                <button type="button" class="chip-btn cubic-example" data-a="1" data-b="-3" data-c="3" data-d="-1" data-i18n="exCubicTriple">ឫសពិត ៣ ដូចគ្នា</button>
+                <button type="button" class="chip-btn cubic-example" data-a="1" data-b="-2" data-c="1" data-d="0" data-i18n="exCubicDouble">ឫសពិត & ឫសឌុប</button>
+                <button type="button" class="chip-btn cubic-example" data-a="1" data-b="0" data-c="0" data-d="-8" data-i18n="exCubic1Real2Comp">១ ពិត, ២ កុំផ្លិច</button>
+                <button type="button" class="chip-btn cubic-example" data-a="0" data-b="1" data-c="-5" data-d="6" data-i18n="exCubicDeg2">ដឺក្រេទី ២ (a=0)</button>
+                <button type="button" class="chip-btn cubic-example" data-a="0" data-b="0" data-c="0" data-d="4" data-i18n="exNoSol">គ្មានចម្លើយ</button>
+              </div>
+
+              <!-- ប៊ូតុងគណនា និងសម្អាត -->
+              <div class="action-buttons">
+                <button id="solveCubicBtn" class="btn btn-primary">
+                  <span>⚡</span> <span data-i18n="btnCalculate">គណនា</span>
+                </button>
+                <button id="clearCubicBtn" class="btn btn-outline">
+                  <span>🧹</span> <span data-i18n="btnClear">សម្អាត</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ប្រអប់បង្ហាញលទ្ធផល និងជំហានដោះស្រាយ -->
+            <div class="card solver-result-card" id="cubicResultContainer">
+              <div class="empty-state">
+                <div class="empty-icon">📐</div>
+                <p data-i18n="emptyResultHint">សូមបញ្ចូលមេគុណ រួចចុចប៊ូតុង "គណនា" ដើម្បីមើលដំណោះស្រាយលម្អិត។</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== ៤. ទំព័ររូបមន្តគណិតវិទ្យា (FORMULAS PAGE) ==================== -->
+        <section id="page-formulas" class="page-section">
+          <div class="formulas-grid">
+            <!-- កាតរូបមន្តសមីការដឺក្រេទី ២ -->
+            <div class="card formula-doc-card">
+              <div class="formula-header">
+                <span class="badge-pill blue">Quadratic</span>
+                <h3 data-i18n="formQuadTitle">រូបមន្តសមីការដឺក្រេទី ២</h3>
+              </div>
+              <div class="formula-box math-font">ax² + bx + c = 0 &nbsp; (a ≠ 0)</div>
+              <ul class="formula-list">
+                <li>
+                  <strong data-i18n="formDiscriminant">ឌីស្គ្រីមីណង់ (Discriminant):</strong>
+                  <span class="math-font">Δ = b² - 4ac</span>
+                </li>
+                <li>
+                  <strong data-i18n="formCase1">ករណី Δ > 0 (ឫសពិត ២ ផ្សេងគ្នា):</strong>
+                  <span class="math-font">x₁ = (-b + √Δ) / 2a , &nbsp; x₂ = (-b - √Δ) / 2a</span>
+                </li>
+                <li>
+                  <strong data-i18n="formCase2">ករណី Δ = 0 (ឫសឌុប):</strong>
+                  <span class="math-font">x₁ = x₂ = -b / 2a</span>
+                </li>
+                <li>
+                  <strong data-i18n="formCase3">ករណី Δ < 0 (ឫសកុំផ្លិចឆ្លាស់):</strong>
+                  <span class="math-font">x = (-b ± i√|Δ|) / 2a</span>
+                </li>
+                <li>
+                  <strong data-i18n="formViete">ទំនាក់ទំនង Viète:</strong>
+                  <span class="math-font">S = x₁ + x₂ = -b/a , &nbsp; P = x₁·x₂ = c/a</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- កាតរូបមន្តសមីការដឺក្រេទី ៣ -->
+            <div class="card formula-doc-card">
+              <div class="formula-header">
+                <span class="badge-pill purple">Cubic</span>
+                <h3 data-i18n="formCubicTitle">រូបមន្តសមីការដឺក្រេទី ៣ (Cardano)</h3>
+              </div>
+              <div class="formula-box math-font">ax³ + bx² + cx + d = 0 &nbsp; (a ≠ 0)</div>
+              <ul class="formula-list">
+                <li>
+                  <strong data-i18n="formDepressed">បម្លែងជាទម្រង់សង្ខេប (x = t - b/3a):</strong>
+                  <span class="math-font">t³ + pt + q = 0</span>
+                </li>
+                <li>
+                  <strong data-i18n="formPQ">មេគុណ p និង q:</strong>
+                  <span class="math-font">p = (3ac - b²) / 3a² , &nbsp; q = (2b³ - 9abc + 27a²d) / 27a³</span>
+                </li>
+                <li>
+                  <strong data-i18n="formCubicDelta">ឌីស្គ្រីមីណង់ដឺក្រេទី ៣:</strong>
+                  <span class="math-font">Δ₀ = (q/2)² + (p/3)³</span>
+                </li>
+                <li>
+                  <strong data-i18n="formCardanoRoot">រូបមន្ត Cardano (Δ₀ > 0):</strong>
+                  <span class="math-font">t = ∛(-q/2 + √Δ₀) + ∛(-q/2 - √Δ₀)</span>
+                </li>
+                <li>
+                  <strong data-i18n="formCubicViete">ទំនាក់ទំនង Viète ដឺក្រេទី ៣:</strong>
+                  <span class="math-font">x₁+x₂+x₃ = -b/a , &nbsp; x₁x₂x₃ = -d/a</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== ៥. ទំព័រប្រវត្តិគណនា (HISTORY PAGE) ==================== -->
+        <section id="page-history" class="page-section">
+          <div class="card">
+            <div class="history-header">
+              <div>
+                <h3 data-i18n="historyTitle">ប្រវត្តិនៃការគណនាសមីការ</h3>
+                <p data-i18n="historySub">រក្សាទុកសមីការដែលអ្នកបានគណនាដោយស្វ័យប្រវត្តិក្នុងកម្មវិធី។</p>
+              </div>
+              <button id="clearHistoryBtn" class="btn btn-danger">
+                <span>🗑️</span> <span data-i18n="btnClearHistory">លុបប្រវត្តិទាំងអស់</span>
+              </button>
+            </div>
+            <div id="historyList" class="history-list">
+              <!-- មាតិកាប្រវត្តិគណនានឹងត្រូវបង្ហាញតាមរយៈ JavaScript -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== ៦. ទំព័រក្រុមការងារ (TEAM WORK PAGE) ==================== -->
+        <section id="page-team" class="page-section">
+          <div class="team-intro card">
+            <h3 data-i18n="teamTitle">សមាជិកក្រុមអភិវឌ្ឍន៍គម្រោង</h3>
+            <p data-i18n="teamSub">គម្រោងបទបង្ហាញថ្នាក់វិទ្យាល័យ៖ ប្រធានក្រុម ១ នាក់ និងសមាជិក ៤ នាក់</p>
+          </div>
+          <!-- កន្លែងបង្ហាញកាតប្រធានក្រុម និងសមាជិកទាំង ៤ (Rendered via js/team.js) -->
+          <div id="teamGrid" class="team-grid"></div>
+        </section>
+
+        <!-- ==================== ៧. ទំព័រអំពីកម្មវិធី (ABOUT PAGE) ==================== -->
+        <section id="page-about" class="page-section">
+          <div class="card about-card">
+            <div class="about-top">
+              <span class="math-badge large">∑𝑥</span>
+              <div>
+                <h3>Equation Solver Pro v1.0</h3>
+                <p data-i18n="aboutTagline">កម្មវិធីដោះស្រាយសមីការពិជគណិតសម្រាប់សិស្សវិទ្យាល័យ</p>
+              </div>
+            </div>
+            <div class="about-body">
+              <p data-i18n="aboutDesc1">
+                <strong>Equation Solver Pro</strong> ត្រូវបានបង្កើតឡើងក្នុងគោលបំណងជួយសម្រួលដល់សិស្សានុសិស្ស និងលោកគ្រូអ្នកគ្រូក្នុងការសិក្សា ផ្ទៀងផ្ទាត់ចម្លើយ និងយល់ដឹងពីជំហានលម្អិតនៃការដោះស្រាយសមីការដឺក្រេទី ២ និងដឺក្រេទី ៣។
+              </p>
+              <div class="tech-stack-box">
+                <h4 data-i18n="techUsedTitle">បច្ចេកវិទ្យាដែលបានប្រើប្រាស់៖</h4>
+                <div class="tech-pills">
+                  <span class="tech-pill">HTML5 Semantic</span>
+                  <span class="tech-pill">CSS3 Variables & Grid</span>
+                  <span class="tech-pill">Vanilla JavaScript (ES6+)</span>
+                  <span class="tech-pill">Cardano & Quadratic Algorithms</span>
+                  <span class="tech-pill">Khmer / English i18n</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ភ្ជាប់ឯកសារ JavaScript តាមលំដាប់លំដោយ (Modular JS Files) -->
+  <script src="js/language.js"></script>
+  <script src="js/quadratic.js"></script>
+  <script src="js/cubic.js"></script>
+  <script src="js/team.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+/* ==========================================================================
+   ឯកសាររចនាសម្របតាមទំហំអេក្រង់ (Responsive Stylesheet - css/responsive.css)
+   ធានាថាកម្មវិធីដំណើរការល្អលើកុំព្យូទ័រ ថេប្លេត និងទូរស័ព្ទដៃ
+   ========================================================================== */
+
+/* អេក្រង់ថេប្លេត និងកុំព្យូទ័រតូច (Tablet & Small Laptop <= 1024px) */
+@media (max-width: 1024px) {
+  .hero-card {
+    grid-template-columns: 1fr;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .solver-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .formulas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* អេក្រង់ទូរស័ព្ទដៃ និងថេប្លេតបញ្ឈរ (Mobile & Portrait Tablet <= 768px) */
+@media (max-width: 768px) {
+  /* លាក់របារម៉ឺនុយចំហៀងជាលំនាំដើមលើទូរស័ព្ទ (Off-canvas Mobile Sidebar) */
+  .sidebar {
+    transform: translateX(-100%);
+    width: 265px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* បង្ហាញផ្ទាំងងងឹតពេលបើកម៉ឺនុយលើទូរស័ព្ទ */
+  .sidebar-overlay.active {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+    z-index: 950;
+  }
+
+  .main-wrapper {
+    margin-left: 0;
+  }
+
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .mobile-only {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .topbar {
+    padding: 0 1rem;
+  }
+
+  .page-heading {
+    font-size: 1.05rem;
+  }
+
+  .content-area {
+    padding: 1.15rem;
+  }
+
+  .hero-card {
+    padding: 1.4rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.42rem;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* អេក្រង់ទូរស័ព្ទតូចខ្លាំង (Extra Small Mobile <= 480px) */
+@media (max-width: 480px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .control-pill {
+    padding: 0.42rem 0.72rem;
+    font-size: 0.8rem;
+  }
+}
